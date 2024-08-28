@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 @Entity
 @Table(name = "suggestion")
@@ -23,9 +25,9 @@ public class SuggestionEntity {
 
     @Column(nullable = false)
     @JsonFormat(pattern = "dd/MM/yyyy")
-    private String registerDate;
+    private LocalDateTime registerDate = LocalDateTime.now();
 
     @JsonFormat(pattern = "dd/MM/yyyy")
-    private String updateDate;
+    private LocalDateTime updateDate = LocalDateTime.now();
 
 }

@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Data
 @Table(name = "comment")
@@ -23,5 +25,5 @@ public class CommentEntity {
 
     @Column(nullable = false)
     @JsonFormat(pattern = "dd/MM/yyyy")
-    private String sendDate;
+    private LocalDateTime sendDate = LocalDateTime.now();
 }
