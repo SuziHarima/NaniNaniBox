@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
+
 
 @Slf4j
 @AllArgsConstructor
@@ -26,6 +28,11 @@ public class SuggestionService {
 
         suggestionRepository.save(suggestion);
         log.info("Suggestion CREATED");
+    }
+
+    public List<SuggestionEntity> listAll(){
+        log.info("Searching all Suggestions on database");
+        return suggestionRepository.findAll();
     }
 
 }
