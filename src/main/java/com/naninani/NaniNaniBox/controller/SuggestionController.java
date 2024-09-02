@@ -6,6 +6,10 @@ import com.naninani.NaniNaniBox.dto.SuggestionRequest;
 import com.naninani.NaniNaniBox.entity.SuggestionEntity;
 import com.naninani.NaniNaniBox.service.CommentService;
 import com.naninani.NaniNaniBox.service.SuggestionService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpMessage;
@@ -19,11 +23,21 @@ import java.util.List;
 @RestController
 @RequestMapping("suggestion")
 @AllArgsConstructor
+@Tag(name = "CRUD Suggestion", description = "Suggestion endpoints")
 public class SuggestionController {
 
     private final SuggestionService suggestionService;
     private final CommentService commentService;
 
+
+    @Operation(summary = "Create new suggestion")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "201",
+                    description = "Suggestion CREATED",
+                    useReturnTypeSchema = true
+            )
+    })
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void create(@RequestBody SuggestionRequest suggestionRequest){
@@ -32,6 +46,14 @@ public class SuggestionController {
         log.info("POST /suggestion -> END");
     }
 
+    @Operation(summary = "Search suggestion")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "suggestion located on database",
+                    useReturnTypeSchema = true
+            )
+    })
     @GetMapping
     public List<SuggestionEntity> listAll(){
         log.info("GET /suggestion -> BEGIN");
@@ -40,6 +62,14 @@ public class SuggestionController {
         return suggestionList;
     }
 
+    @Operation(summary = "Search Suggestion By ID")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Suggestion located on database",
+                    useReturnTypeSchema = true
+            )
+    })
     @GetMapping("{id}")
     public SuggestionEntity findByID(@PathVariable Integer id){
         log.info("GET /suggestion -> BEGIN");
@@ -48,6 +78,15 @@ public class SuggestionController {
         return suggestion;
     }
 
+
+    @Operation(summary = "Create comment")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "201",
+                    description = "comment CREATED",
+                    useReturnTypeSchema = true
+            )
+    })
     @PostMapping("{id}/comment")
     @ResponseStatus(HttpStatus.CREATED)
     public void createComment(@RequestBody CommentRequest commentRequest, @PathVariable Integer id){
