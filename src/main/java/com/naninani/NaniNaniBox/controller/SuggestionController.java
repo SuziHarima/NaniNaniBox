@@ -1,8 +1,10 @@
 package com.naninani.NaniNaniBox.controller;
 
 
+import com.naninani.NaniNaniBox.dto.CommentRequest;
 import com.naninani.NaniNaniBox.dto.SuggestionRequest;
 import com.naninani.NaniNaniBox.entity.SuggestionEntity;
+import com.naninani.NaniNaniBox.service.CommentService;
 import com.naninani.NaniNaniBox.service.SuggestionService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +22,7 @@ import java.util.List;
 public class SuggestionController {
 
     private final SuggestionService suggestionService;
+    private final CommentService commentService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -43,5 +46,13 @@ public class SuggestionController {
         SuggestionEntity suggestion = suggestionService.findById(id);
         log.info("GET /suggestion -> END");
         return suggestion;
+    }
+
+    @PostMapping("{id}/comment")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createComment(@RequestBody CommentRequest commentRequest, @PathVariable Integer id){
+        log.info("POST /comment -> BEGIN");
+        commentService.create(commentRequest,id);
+        log.info("POST /comment -> END");
     }
 }
