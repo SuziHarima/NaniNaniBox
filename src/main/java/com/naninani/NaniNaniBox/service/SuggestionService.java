@@ -31,8 +31,15 @@ public class SuggestionService {
     }
 
     public List<SuggestionEntity> listAll(){
-        log.info("Searching all Suggestions on database");
+        log.info("Searching all Suggestions on database...");
         return suggestionRepository.findAll();
+    }
+
+    public SuggestionEntity findById(Integer id){
+        log.info("Searching Suggestion by ID...");
+        SuggestionEntity suggestion = suggestionRepository.findById(id).orElseThrow(
+                () -> new RuntimeException("Suggestion not found"));
+        return suggestion;
     }
 
 }

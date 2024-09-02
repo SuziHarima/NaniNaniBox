@@ -24,14 +24,24 @@ public class SuggestionController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void create(@RequestBody SuggestionRequest suggestionRequest){
+        log.info("POST /suggestion -> BEGIN");
         suggestionService.create(suggestionRequest);
-        log.info("POST /suggestion -> 201 CREATED");
+        log.info("POST /suggestion -> END");
     }
 
     @GetMapping
     public List<SuggestionEntity> listAll(){
+        log.info("GET /suggestion -> BEGIN");
        List<SuggestionEntity> suggestionList = suggestionService.listAll();
-        log.info("GET /suggestion -> SUCCESSFUL");
+        log.info("GET /suggestion -> END");
         return suggestionList;
+    }
+
+    @GetMapping("{id}")
+    public SuggestionEntity findByID(@PathVariable Integer id){
+        log.info("GET /suggestion -> BEGIN");
+        SuggestionEntity suggestion = suggestionService.findById(id);
+        log.info("GET /suggestion -> END");
+        return suggestion;
     }
 }
